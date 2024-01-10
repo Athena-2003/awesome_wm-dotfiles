@@ -17,6 +17,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
 -- Import module:
 local battery_widget = require("battery-widget")
@@ -217,12 +218,14 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
+            volume_widget{
+                widget_type = 'icon_and_text'
+            },
             battery_widget {
                 -- pass options here
                 -- Show a visual indicator of charge level when on battery power
-                ac_prefix = "AC: ",
-                battery_prefix = "Bat: ",
+                ac_prefix = " AC: ",
+                battery_prefix = " Bat: ",
                 widget_font = "JetBrainMono Nerd Font Medium 10",
             },
             mytextclock,
@@ -352,19 +355,22 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
     -- Volume Keys
-    awful.key({}, "XF86AudioLowerVolume", function ()
-        awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
-    awful.key({}, "XF86AudioRaiseVolume", function ()
-        awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
-    awful.key({}, "XF86AudioMute", function ()
-        awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
-    -- Media Keys
-    awful.key({}, "XF86AudioPlay", function()
-        awful.util.spawn("playerctl play-pause", false) end),
-    awful.key({}, "XF86AudioNext", function()
-        awful.util.spawn("playerctl next", false) end),
-    awful.key({}, "XF86AudioPrev", function()
-        awful.util.spawn("playerctl previous", false) end)
+    -- awful.key({}, "XF86AudioLowerVolume", function ()
+    --     awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
+    -- awful.key({}, "XF86AudioRaiseVolume", function ()
+    --     awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
+    -- awful.key({}, "XF86AudioMute", function ()
+    --     awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+    -- -- Media Keys
+    -- awful.key({}, "XF86AudioPlay", function()
+    --     awful.util.spawn("playerctl play-pause", false) end),
+    -- awful.key({}, "XF86AudioNext", function()
+    --     awful.util.spawn("playerctl next", false) end),
+    -- awful.key({}, "XF86AudioPrev", function()
+    --     awful.util.spawn("playerctl previous", false) end)
+    awful.key({}, "XF86AudioRaiseVolume", function() volume_widget.inc() end),
+    awful.key({}, "XF86AudioLowerVolume", function() volume_widget.dec() end),
+    awful.key({}, "XF86AudioMute", function() volume_widget.toggle() end)
 )
 
 clientkeys = gears.table.join(
