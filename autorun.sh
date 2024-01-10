@@ -7,4 +7,5 @@ run() {
   fi
 }
 
-run(flameshot)
+run "flameshot"
+run "xcompmgr"
