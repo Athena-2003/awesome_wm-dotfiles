@@ -1,1 +1,1 @@
-# My Awesome Window Manager Config Files
+## My Awesome Window Manager Config Files
