@@ -20,7 +20,7 @@ require("awful.hotkeys_popup.keys")
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
 -- Import module:
-local battery_widget = require("battery-widget")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -221,13 +221,9 @@ awful.screen.connect_for_each_screen(function(s)
             volume_widget{
                 widget_type = 'icon_and_text'
             },
-            battery_widget {
-                -- pass options here
-                -- Show a visual indicator of charge level when on battery power
-                ac_prefix = " AC: ",
-                battery_prefix = " Bat: ",
-                widget_font = "JetBrainMono Nerd Font Medium 10",
-            },
+            battery_widget({
+                show_current_level = true,
+            }),
             mytextclock,
             wibox.widget.systray(),
             s.mylayoutbox,
