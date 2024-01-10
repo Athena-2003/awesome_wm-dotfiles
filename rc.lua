@@ -49,7 +49,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.font = "JetBrainMono Nerd Font Medium 10"
+beautiful.font = "JetBrainsMono Nerd Font 10"
 
 -- This is used later as the default terminal and editor to run.
 terminal = "wezterm"
@@ -155,6 +155,7 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
+beautiful.wallpaper = "/home/shashankbn/Pictures/leapoffaith.jpg"
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -217,8 +218,6 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
-            wibox.widget.systray(),
-            mytextclock,
             battery_widget {
                 -- pass options here
                 -- Show a visual indicator of charge level when on battery power
@@ -226,6 +225,8 @@ awful.screen.connect_for_each_screen(function(s)
                 battery_prefix = "Bat: ",
                 widget_font = "JetBrainMono Nerd Font Medium 10",
             },
+            mytextclock,
+            wibox.widget.systray(),
             s.mylayoutbox,
         },
     }
@@ -349,7 +350,21 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+    -- Volume Keys
+    awful.key({}, "XF86AudioLowerVolume", function ()
+        awful.util.spawn("amixer -q -D pulse sset Master 5%-", false) end),
+    awful.key({}, "XF86AudioRaiseVolume", function ()
+        awful.util.spawn("amixer -q -D pulse sset Master 5%+", false) end),
+    awful.key({}, "XF86AudioMute", function ()
+        awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end),
+    -- Media Keys
+    awful.key({}, "XF86AudioPlay", function()
+        awful.util.spawn("playerctl play-pause", false) end),
+    awful.key({}, "XF86AudioNext", function()
+        awful.util.spawn("playerctl next", false) end),
+    awful.key({}, "XF86AudioPrev", function()
+        awful.util.spawn("playerctl previous", false) end)
 )
 
 clientkeys = gears.table.join(
@@ -590,6 +605,15 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-beautiful.useless_gap = 3
+-- Add gaps to windows
+beautiful.useless_gap = 2
 
+awful.spawn.with_shell(
+    'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
+    'xrdb -merge <<< "awesome.started:true";' ..
+    -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
+    'dex --environment Awesome --autostart'
+    )
 
+-- Auto start apps script
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")
