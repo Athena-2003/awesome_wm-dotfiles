@@ -53,7 +53,7 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 beautiful.font = "JetBrainsMono Nerd Font 10"
 
 -- This is used later as the default terminal and editor to run.
-terminal = "wezterm"
+terminal = "kitty"
 editor = "nvim"
 -- os.getenv("EDITOR") or
 editor_cmd = terminal .. " -e " .. editor
@@ -63,7 +63,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod1"
+modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -156,7 +156,7 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
-beautiful.wallpaper = "/home/shashankbn/Pictures/leapoffaith.jpg"
+beautiful.wallpaper = "/home/shashankbn/Pictures/ghibli1_text.png"
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -241,9 +241,11 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-browser = "firefox-developer-edition"
+browser = "firefox"
 file_manager = "thunar"
 rofi_drun = "rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi"
+bright_up = "light -A 5"
+bright_down = "light -U 5"
 
 
 -- {{{ Key bindings
@@ -305,7 +307,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
-              {description = "increase the number of master clients", group = "layout"}),
+              {description = "increase the number of master clients", "layout"}),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
               {description = "decrease the number of master clients", group = "layout"}),
     awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
@@ -350,6 +352,10 @@ globalkeys = gears.table.join(
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
+              {description = "show the menubar", group = "launcher"}),
+    awful.key({ }, "XF86MonBrightnessUp", function() awful.spawn(bright_up) end,
+              {description = "show the menubar", group = "launcher"}),
+    awful.key({ }, "XF86MonBrightnessDown", function() awful.spawn(bright_down) end,
               {description = "show the menubar", group = "launcher"}),
     -- Volume Keys
     -- awful.key({}, "XF86AudioLowerVolume", function ()
@@ -398,6 +404,13 @@ clientkeys = gears.table.join(
            awful.spawn(file_manager)
         end,
         {description = "File manager", group= "launcher"}),
+    awful.key({ modkey, "Shift"          }, "n",
+        function (c)
+            -- The client currently has the input focus, so it cannot be
+            -- minimized, since minimized clients can't have the focus.
+            c.minimized = true
+        end ,
+        {description = "minimize", group = "client"}),
     awful.key({ modkey,           }, "m",
         function (c)
             c.maximized = not c.maximized
