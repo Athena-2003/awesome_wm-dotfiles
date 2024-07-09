@@ -156,7 +156,7 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
-beautiful.wallpaper = "/home/shashankbn/Pictures/ghibli1_text.png"
+beautiful.wallpaper = "/home/shashankbn/Pictures/blue-city.png"
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -353,6 +353,8 @@ globalkeys = gears.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
+    awful.key({ modkey }, "n", function() awful.spawn(file_manager) end,
+              {description = "show the file manager", group = "launcher"}),
     awful.key({ }, "XF86MonBrightnessUp", function() awful.spawn(bright_up) end,
               {description = "show the menubar", group = "launcher"}),
     awful.key({ }, "XF86MonBrightnessDown", function() awful.spawn(bright_down) end,
@@ -393,17 +395,17 @@ clientkeys = gears.table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey,           }, "n",
-        -- function (c)
-        --     -- The client currently has the input focus, so it cannot be
-        --     -- minimized, since minimized clients can't have the focus.
-        --     c.minimized = true
-        -- end ,
-        -- {description = "minimize", group = "client"}),
-        function ()
-           awful.spawn(file_manager)
-        end,
-        {description = "File manager", group= "launcher"}),
+    -- awful.key({ modkey,           }, "n",
+    --     -- function (c)
+    --     --     -- The client currently has the input focus, so it cannot be
+    --     --     -- minimized, since minimized clients can't have the focus.
+    --     --     c.minimized = true
+    --     -- end ,
+    --     -- {description = "minimize", group = "client"}),
+    --     function ()
+    --        awful.spawn(file_manager)
+    --     end,
+    --     {description = "File manager", group= "launcher"}),
     awful.key({ modkey, "Shift"          }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
