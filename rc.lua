@@ -509,6 +509,9 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
+beautiful.border_width = 2
+beautiful.border_focus = "#8ec07c"
+
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {

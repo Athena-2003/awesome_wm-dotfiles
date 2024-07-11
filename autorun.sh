@@ -8,4 +8,4 @@ run() {
 }
 
 run "flameshot"
-run "xcompmgr"
+run "picom --animations --config ~/.config/awesome/picom.conf -b"
