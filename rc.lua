@@ -21,6 +21,7 @@ local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
 -- Import module:
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -226,9 +227,13 @@ awful.screen.connect_for_each_screen(function(s)
         {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = 10,
-            volume_widget {
+            cpu_widget ({
+                width = 50,
+                step_width = 2
+            }),
+            volume_widget ({
                 widget_type = 'icon_and_text'
-            },
+            }),
             battery_widget({
                 show_current_level = true,
             }),
@@ -248,7 +253,7 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-browser = "firefox"
+browser = "firefox-developer-edition"
 file_manager = "thunar"
 rofi_drun = "rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi"
 bright_up = "light -A 5"
