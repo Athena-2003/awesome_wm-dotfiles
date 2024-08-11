@@ -8,4 +8,4 @@ run() {
 }
 
 run "flameshot"
-run "picom --animations --config ~/.config/picom/picom.conf -b"
+# run "picom --animations --config ~/.config/picom/picom.conf -b"

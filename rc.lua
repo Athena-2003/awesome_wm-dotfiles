@@ -54,7 +54,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 beautiful.font = "JetBrainsMono Nerd Font 10"
 
 -- This is used later as the default terminal and editor to run.
@@ -164,7 +164,7 @@ local tasklist_buttons = gears.table.join(
         awful.client.focus.byidx(-1)
     end))
 
-beautiful.wallpaper = "/home/shashankbn/Pictures/gruvbox3.jpg"
+beautiful.wallpaper = "/home/shashankbn/Pictures/adventure.png"
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
@@ -255,7 +255,8 @@ root.buttons(gears.table.join(
 
 browser = "firefox-developer-edition"
 file_manager = "thunar"
-rofi_drun = "rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi"
+rofi_drun = "rofi -modi drun -show drun"
+-- -config ~/.config/rofi/rofidmenu.rasi"
 bright_up = "light -A 5"
 bright_down = "light -U 5"
 
@@ -515,7 +516,7 @@ root.keys(globalkeys)
 -- }}}
 
 beautiful.border_width = 2
-beautiful.border_focus = "#8ec07c"
+beautiful.border_focus = "#fabd2f"
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
